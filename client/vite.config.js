@@ -1,12 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5050, // Can be changed if needed
+    port: 5050, // Change if needed
   },
   build: {
     outDir: "dist",
-})
+  },
+});
