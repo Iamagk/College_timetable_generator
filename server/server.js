@@ -38,6 +38,11 @@ app.use("/api/timetables", timetableRoutes);
 app.get("/", (req, res) => {
   res.send("✅ Server is running!");
 });
+app.use(cors({
+  origin: ["https://college-timetable-generator-1.onrender.com"], // Change to your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 // ✅ Start Server (Only Once & At the End)
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

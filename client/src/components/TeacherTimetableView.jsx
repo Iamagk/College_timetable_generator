@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
+const BACKEND_URL = "https://college-timetable-generator.onrender.com"; // Updated backend URL
+
 function TeacherTimetableView() {
   const [teachers, setTeachers] = useState([])
   const [selectedTeacher, setSelectedTeacher] = useState('')
@@ -12,7 +14,7 @@ function TeacherTimetableView() {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/teachers')
+      const response = await fetch(`${BACKEND_URL}/api/teachers`)
       if (response.ok) {
         const data = await response.json()
         setTeachers(data)
@@ -27,7 +29,7 @@ function TeacherTimetableView() {
 
   const fetchTeacherTimetable = async (teacherId) => {
     try {
-      const response = await fetch(`http://localhost:5050/api/timetables/teacher/${teacherId}`)
+      const response = await fetch(`${BACKEND_URL}/api/timetables/teacher/${teacherId}`)
       if (response.ok) {
         const data = await response.json()
         setTimetable(data)
@@ -103,15 +105,17 @@ function TeacherTimetableView() {
                       return (
                         <td key={slotNumber} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {slot ? (
-                            <>
-                              <div>{slot.subject.name}</div>
+                            <div>
+                              <div className="font-semibold">{slot.subject?.name || 'Unknown Subject'}</div>
                               <div className="text-xs text-gray-400">{slot.timetableInfo}</div>
-                            </>
+                            </div>
                           ) : slotNumber === 3 ? (
                             <div className="text-xs text-gray-400">Tea Break</div>
                           ) : slotNumber === 5 ? (
                             <div className="text-xs text-gray-400">Lunch Break</div>
-                          ) : '-'}
+                          ) : (
+                            '-'
+                          )}
                         </td>
                       )
                     })}
